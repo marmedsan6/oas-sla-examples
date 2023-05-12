@@ -8,20 +8,20 @@ info:
 security:
   - BearerAuth: []
 paths:
-  /api/v1/teams:
-    x-router-controller: teamsController
+  /api/v1/jobss:
+    x-router-controller: jobsController
     get:
-      description: Returns all teams
-      operationId: getTeams
+      description: Returns all jobss
+      operationId: getJobss
       responses:
         200:
-          description: Team list
+          description: Jobs list
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/team'
+                  $ref: '#/components/schemas/error'
         default:
           description: Unexpected error
           content:
@@ -35,7 +35,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/team'
+              $ref: '#/components/schemas/jobs'
         description: Team to be created
         required: true
       responses:
@@ -48,11 +48,11 @@ paths:
                 schema:
                   $ref: '#/components/schemas/error'
                   
-  /api/v1/teams/{id}:
-    x-router-controller: teamsController
+  /api/v1/jobss/{province}:
+    x-router-controller: jobsController
     get:
-      description: Returns a single team by its id
-      operationId: findByid
+      description: Returns a single team by its jobs
+      operationId: findByprovince
       parameters:
         - required: true
           name: id
@@ -62,11 +62,11 @@ paths:
             type: number
       responses:
         200:
-          description: Team found by id
+          description: Team found by jobs
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/team'
+                $ref: '#/components/schemas/jobs'
         default:
           description: Unexpected error
           content:
@@ -87,12 +87,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/team'
+              $ref: '#/components/schemas/jobs'
         description: Team to be updated
         required: true
       responses:
         '204':
-          description: Team updated
+          description: Jobs updated
         default:
           description: Unexpected error
           content:
@@ -126,25 +126,23 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    team:
+    jobs:
         type: object
         required:
-          - id
+          - province
         properties:
-          id:
+          province:
+            type: string
+          year:
             type: number
-          name:
+          gender:
             type: string
-          code:
-            type: string
-          country:
-            type: string
-          founded:
+          low_due_to_placement:
             type: number
-          national:
-            type: boolean
-          logo:
-            type: string
+          no_renovation:
+            type: number
+          other_reason:
+            type: number
     error:
       type: object
       required:
